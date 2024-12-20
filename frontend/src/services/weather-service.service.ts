@@ -1,17 +1,6 @@
 import * as backendApi from '../shared/backend-api';
+import { ForecastModel } from '@weather-app/shared';
 
-export interface ForecastModel {
-  latitude: number,
-  longitude: number,
-  elevation: number,
-  current_weather: {
-      temperature: number,
-      windspeed: number,
-      winddirection: number,
-      weathercode: number,
-      time: Date
-  }
-}
 export default class WeatherService {
   constructor() {}
 
