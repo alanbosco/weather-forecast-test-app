@@ -19,7 +19,7 @@ app.provide('weatherService', weatherService);
 
 app.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyAmlmN3Spuolpvy8xtSeeYK2KgH0166I90',
+        key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
         libraries: 'places,geometry',
     },
 });
