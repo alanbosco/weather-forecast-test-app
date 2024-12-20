@@ -1,9 +1,5 @@
 import { Options, Vue } from 'vue-class-component';
-
-interface Coordinates {
-  lat: number;
-  lng: number;
-}
+import GoogleMapsGeocodingService, { Coordinates } from '@/services/google-maps-geocoding.service';
 
 @Options({
   emits: ['coordinates-changed']
@@ -11,6 +7,7 @@ interface Coordinates {
 export default class SearchCity extends Vue {
   selectedPlace: Coordinates | null = null;
   selectedLocationName: string = '';
+  private geocodingService: GoogleMapsGeocodingService | null = null;
 
   placeChanged(place: any) {
     if (place.geometry?.location) {
@@ -23,13 +20,21 @@ export default class SearchCity extends Vue {
     }
   }
 
-  onMapClick(event: any) {
+  async onMapClick(event: any) {
     if (event.latLng) {
-      this.selectedPlace = {
+      const coordinates = {
         lat: event.latLng.lat(),
         lng: event.latLng.lng(),
       };
-      this.selectedLocationName = `${event.latLng.lat().toFixed(4)}, ${event.latLng.lng().toFixed(4)}`;
+      
+      this.selectedPlace = coordinates;
+
+      // Initialize geocoding service only when needed
+      if (!this.geocodingService) {
+        this.geocodingService = new GoogleMapsGeocodingService();
+      }
+      
+      this.selectedLocationName = await this.geocodingService.getLocationName(coordinates);
       this.emitCoordinates();
     }
   }
