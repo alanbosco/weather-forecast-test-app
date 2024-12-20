@@ -41,8 +41,15 @@
 
       <div class="bg-purple-50 p-4 rounded-lg">
         <div class="text-sm text-purple-600 font-medium">Weather Condition</div>
-        <div class="text-xl font-semibold text-purple-800">
-          {{ getWeatherDescription(forecast.current_weather.weathercode) }}
+        <div class="flex items-center justify-center">
+          <img 
+            :src="getWeatherInfo(forecast.current_weather.weathercode).image" 
+            :alt="getWeatherInfo(forecast.current_weather.weathercode).description"
+            class="w-12 h-12 mr-3"
+          />
+          <div class="text-xl font-semibold text-purple-800">
+            {{ getWeatherInfo(forecast.current_weather.weathercode).description }}
+          </div>
         </div>
       </div>
 

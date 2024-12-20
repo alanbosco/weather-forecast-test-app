@@ -2,6 +2,19 @@ import WeatherService from '@/services/weather-service.service';
 import { Options, Vue } from 'vue-class-component';
 import { Inject, Prop, Watch } from 'vue-property-decorator';
 import { ForecastModel } from '@/services/weather-service.service';
+// https://gist.github.com/stellasphere/9490c195ed2b53c707087c8c2db4ec0c
+import weatherDescriptions from '@/data/wmo-descriptions.json';
+
+
+interface WeatherDescription {
+  description: string;
+  image: string;
+}
+
+interface WMOCode {
+  day: WeatherDescription;
+  night: WeatherDescription;
+}
 
 @Options({
   props: {
@@ -20,6 +33,17 @@ export default class WeatherForecast extends Vue {
   forecast: ForecastModel | null = null;
   loading = false;
   error: string | null = null;
+
+  getWeatherInfo(code: number, isDay: boolean = true): WeatherDescription {
+    const weatherCode = weatherDescriptions[code as unknown as keyof typeof weatherDescriptions];
+    if (!weatherCode) {
+      return {
+        description: 'Unknown weather',
+        image: 'https://openweathermap.org/img/wn/01d@2x.png'
+      };
+    }
+    return isDay ? weatherCode.day : weatherCode.night;
+  }
 
   @Watch('coordinates', { immediate: true })
   async onCoordinatesChange(newCoords: { lat: number; lng: number } | null) {
