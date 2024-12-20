@@ -21,24 +21,24 @@
       </p>
     </div>
     
-    <div v-else-if="forecast">
+    <div v-else-if="forecast" data-test="weather-forecast">
       <div class="grid grid-cols-2 md:grid-cols-12 gap-4">
-        <div class="bg-blue-50 p-4 rounded-lg md:col-span-2">
+        <div class="bg-blue-50 p-4 rounded-lg md:col-span-2" data-test="temperature">
           <div class="text-sm text-blue-600 font-medium">Temperature</div>
           <div class="text-2xl font-bold text-blue-800">{{ forecast.current_weather.temperature }}°C</div>
         </div>
         
-        <div class="bg-green-50 p-4 rounded-lg md:col-span-3">
+        <div class="bg-green-50 p-4 rounded-lg md:col-span-3" data-test="wind-speed">
           <div class="text-sm text-green-600 font-medium">Wind Speed</div>
           <div class="text-2xl font-bold text-green-800">{{ forecast.current_weather.windspeed }} km/h</div>
         </div>
 
-        <div class="bg-gray-50 p-4 rounded-lg col-span-2 md:col-span-2">
+        <div class="bg-gray-50 p-4 rounded-lg col-span-2 md:col-span-2" data-test="wind-direction">
           <div class="text-sm text-gray-600 font-medium">Wind Direction</div>
           <div class="text-xl font-semibold text-gray-800">{{ forecast.current_weather.winddirection }}°</div>
         </div>
 
-        <div class="bg-purple-50 p-4 rounded-lg col-span-2 md:col-span-5">
+        <div class="bg-purple-50 p-4 rounded-lg col-span-2 md:col-span-5" data-test="weather-condition">
           <div class="text-sm text-purple-600 font-medium">Weather Condition</div>
           <div class="flex items-center justify-center">
             <img 
