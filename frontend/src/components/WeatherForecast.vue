@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-lg rounded-lg p-6 max-w-md mx-auto my-4">
+  <div class="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto my-4">
     <h3 class="text-xl font-semibold text-gray-800 mb-4">Weather forecast for selected location</h3>
     
     <div v-if="loading" class="bg-blue-50 text-blue-600 p-4 rounded-md animate-pulse">
@@ -21,37 +21,38 @@
       </p>
     </div>
     
-    <div v-else-if="forecast" class="space-y-4">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="bg-blue-50 p-4 rounded-lg">
+    <div v-else-if="forecast">
+      <div class="grid grid-cols-2 md:grid-cols-12 gap-4">
+        <div class="bg-blue-50 p-4 rounded-lg md:col-span-2">
           <div class="text-sm text-blue-600 font-medium">Temperature</div>
           <div class="text-2xl font-bold text-blue-800">{{ forecast.current_weather.temperature }}°C</div>
         </div>
         
-        <div class="bg-green-50 p-4 rounded-lg">
+        <div class="bg-green-50 p-4 rounded-lg md:col-span-3">
           <div class="text-sm text-green-600 font-medium">Wind Speed</div>
           <div class="text-2xl font-bold text-green-800">{{ forecast.current_weather.windspeed }} km/h</div>
         </div>
-      </div>
 
-      <div class="bg-gray-50 p-4 rounded-lg">
-        <div class="text-sm text-gray-600 font-medium">Wind Direction</div>
-        <div class="text-xl font-semibold text-gray-800">{{ forecast.current_weather.winddirection }}°</div>
-      </div>
+        <div class="bg-gray-50 p-4 rounded-lg col-span-2 md:col-span-2">
+          <div class="text-sm text-gray-600 font-medium">Wind Direction</div>
+          <div class="text-xl font-semibold text-gray-800">{{ forecast.current_weather.winddirection }}°</div>
+        </div>
 
-      <div class="bg-purple-50 p-4 rounded-lg">
-        <div class="text-sm text-purple-600 font-medium">Weather Condition</div>
-        <div class="flex items-center justify-center">
-          <img 
-            :src="getWeatherInfo(forecast.current_weather.weathercode).image" 
-            :alt="getWeatherInfo(forecast.current_weather.weathercode).description"
-            class="w-12 h-12 mr-3"
-          />
-          <div class="text-xl font-semibold text-purple-800">
-            {{ getWeatherInfo(forecast.current_weather.weathercode).description }}
+        <div class="bg-purple-50 p-4 rounded-lg col-span-2 md:col-span-5">
+          <div class="text-sm text-purple-600 font-medium">Weather Condition</div>
+          <div class="flex items-center justify-center">
+            <img 
+              :src="getWeatherInfo(forecast.current_weather.weathercode).image" 
+              :alt="getWeatherInfo(forecast.current_weather.weathercode).description"
+              class="w-12 h-12 mr-3"
+            />
+            <div class="text-xl font-semibold text-purple-800">
+              {{ getWeatherInfo(forecast.current_weather.weathercode).description }}
+            </div>
           </div>
         </div>
       </div>
+
 
       <div class="text-sm text-gray-500 mt-4">
         Last Updated: {{ new Date(forecast.current_weather.time).toLocaleString() }}
