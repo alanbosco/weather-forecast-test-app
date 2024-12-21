@@ -6,7 +6,7 @@ import GoogleMapsGeocodingService, { Coordinates } from '@/services/google-maps-
 })
 export default class SearchCity extends Vue {
   selectedPlace: Coordinates | null = null;
-  selectedLocationName: string = '';
+  selectedLocationName = '';
   private geocodingService: GoogleMapsGeocodingService | null = null;
 
   placeChanged(place: any) {

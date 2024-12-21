@@ -2,13 +2,20 @@
 
 A modern weather forecast application built with Vue.js and Express.js, featuring real-time weather data, interactive maps, and a responsive design.
 
-![](screenshot.jpg)
+<div align="center">
+  <img src="screenshot.jpg" width="80%" alt="Desktop View" />
+</div>
+
+> View [Mobile Screenshot](screenshot-mobile.jpg)
 
 ## Features
 
 - 🌍 Interactive Google Maps integration for location selection
 - 🔍 Location search with Google Places Autocomplete
 - 🌤️ Real-time weather data from Open-Meteo API
+- 🔄 Unit conversion support:
+  - Temperature (Celsius/Fahrenheit)
+  - Wind Speed (Km/h/MPH)
 - 📱 Responsive design for mobile and desktop
 - 🎨 Modern UI with Tailwind CSS
 - 🧪 End-to-end testing with Cypress
