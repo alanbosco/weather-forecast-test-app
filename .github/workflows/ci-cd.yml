@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: ["main", "deploy-testing"]
+    branches: ["main"]
   pull_request:
-    branches: ["main", "deploy-testing"]
+    branches: ["main"]
 
 env:
   REGISTRY: ghcr.io
@@ -50,7 +50,7 @@ jobs:
   build-and-deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/deploy-testing'
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       packages: write
