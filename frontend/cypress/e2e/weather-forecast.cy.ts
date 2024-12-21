@@ -60,4 +60,45 @@ describe('template spec', () => {
     cy.get('[data-test="wind-direction"]').should('be.visible')
     cy.get('[data-test="weather-condition"]').should('be.visible')
   })
+
+  it('should display weather forecast for a selected location with unit toggles', () => {
+    cy.get('[data-test="location-search"]').type('Copenhagen');
+    cy.get('.pac-container').should('be.visible')
+      .find('.pac-item').first().click();
+
+    cy.get('[data-test="weather-forecast"]', { timeout: 30000 }).should('exist');
+
+    cy.get('[data-test="temperature"]')
+      .should('contain', '°C');
+    cy.get('[data-test="wind-speed"]')
+      .should('contain', 'km/h');
+
+    cy.get('[data-test="fahrenheit-toggle"]').click();
+    cy.get('[data-test="temperature"]')
+      .should('contain', '°F');
+
+    cy.get('[data-test="mph-toggle"]').click();
+    cy.get('[data-test="wind-speed"]')
+      .should('contain', 'mp/h');
+
+    cy.get('[data-test="celsius-toggle"]').click();
+    cy.get('[data-test="temperature"]')
+      .should('contain', '°C');
+
+    cy.get('[data-test="kph-toggle"]').click();
+    cy.get('[data-test="wind-speed"]')
+      .should('contain', 'km/h');
+
+    cy.get('[data-test="refresh-forecast"]').click();
+    cy.get('[data-test="weather-forecast"]').should('exist');
+
+    cy.get('[data-test="wind-direction"]').should('exist');
+    cy.get('[data-test="weather-condition"]')
+      .should('exist')
+      .within(() => {
+        cy.get('img').should('be.visible');
+        cy.get('.text-xl').should('not.be.empty');
+      });
+  });
+
 })
