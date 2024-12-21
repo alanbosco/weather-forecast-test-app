@@ -8,31 +8,78 @@ const openMeteoApi = axios.create({
 });
 
 export interface ForecastModel {
-    latitude: number,
-    longitude: number,
-    elevation: number,
+    latitude: number;
+    longitude: number;
+    generationtime_ms: number;
+    utc_offset_seconds: number;
+    timezone: string;
+    timezone_abbreviation: string;
+    elevation: number;
+    current_weather_units: {
+        time: string;
+        interval: string;
+        temperature: string;
+        windspeed: string;
+        winddirection: string;
+        is_day: string;
+        weathercode: string;
+    };
     current_weather: {
-        temperature: number,
-        windspeed: number,
-        winddirection: number,
-        weathercode: number,
-        time: Date
-    }
+        time: string;
+        interval: number;
+        temperature: number;
+        windspeed: number;
+        winddirection: number;
+        is_day: number;
+        weathercode: number;
+    };
 }
 
-export async function getWeatherForecast(lat: number, lng: number): Promise<ForecastModel> {
+export enum TemperatureUnit {
+    Fahrenheit = 'fahrenheit',
+    Celsius = 'celsius',
+}
+
+export enum WindSpeedUnit {
+    MPH = 'mph',
+    KPH = 'kph',
+}
+
+export interface ForecastParamsModel {
+    latitude: number;
+    longitude: number;
+    current_weather: boolean;
+    temperature_unit?: TemperatureUnit;
+    wind_speed_unit?: WindSpeedUnit;
+}
+
+export async function getWeatherForecast(
+    lat: number,
+    lng: number,
+    temperatureUnit?: TemperatureUnit,
+    windSpeedUnit?: WindSpeedUnit
+): Promise<ForecastModel> {
     if (!lat || !lng) {
         throw new ErrorModel('WEATHER.INVALID_COORDINATES', 400);
+    }
+    const params: ForecastParamsModel = {
+        latitude: lat,
+        longitude: lng,
+        current_weather: true,
+    }
+
+    if (temperatureUnit === TemperatureUnit.Fahrenheit) {
+        params.temperature_unit = TemperatureUnit.Fahrenheit;
+    }
+    
+    if (windSpeedUnit === WindSpeedUnit.MPH) {
+        params.wind_speed_unit = WindSpeedUnit.MPH;
     }
 
     try {
         const response = await openMeteoApi.get<ForecastModel>('/forecast',
             {
-                params: {
-                    latitude: lat,
-                    longitude: lng,
-                    current_weather: true
-                }
+                params: params
             }
         );
 
