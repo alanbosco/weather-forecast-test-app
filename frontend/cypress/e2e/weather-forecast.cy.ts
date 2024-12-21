@@ -53,7 +53,7 @@ describe('template spec', () => {
     cy.wait(1000)
     cy.get('.pac-container').should('be.visible')
     cy.get('.pac-item').first().click()
-
+    cy.wait(4000)
     cy.get('[data-test="weather-forecast"]').should('be.visible')
     cy.get('[data-test="temperature"]').should('be.visible')
     cy.get('[data-test="wind-speed"]').should('be.visible')
