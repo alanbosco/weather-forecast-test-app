@@ -1,9 +1,16 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <header class="flex justify-between items-center">
+    <div class="text-2xl font-bold pl-2">
+      Weather Forecast App
+    </div>
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </nav>
+  </header>
+  <main>
+    <router-view/>
+  </main>
 </template>
 
 <style>
@@ -16,7 +23,7 @@
 }
 
 nav {
-  padding: 30px;
+  padding: 10px;
 }
 
 nav a {
@@ -25,6 +32,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  @apply text-primary-400
 }
 </style>

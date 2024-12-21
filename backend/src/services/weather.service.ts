@@ -1,3 +1,11 @@
+import axios from 'axios';
+import { ErrorModel } from '../shared/server-response';
+
+const OPEN_METEO_BASE_URL = 'https://api.open-meteo.com/v1';
+
+const openMeteoApi = axios.create({
+    baseURL: OPEN_METEO_BASE_URL,
+});
 
 export interface ForecastModel {
     latitude: number,
@@ -12,23 +20,30 @@ export interface ForecastModel {
     }
 }
 
-
 export async function getWeatherForecast(lat: number, lng: number): Promise<ForecastModel> {
+    if (!lat || !lng) {
+        throw new ErrorModel('WEATHER.INVALID_COORDINATES', 400);
+    }
 
-    // TODO: make a call to this API with latitude and longitude from the frontend
-    // use axios to make the call
-    //  https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true
+    try {
+        const response = await openMeteoApi.get<ForecastModel>('/forecast',
+            {
+                params: {
+                    latitude: lat,
+                    longitude: lng,
+                    current_weather: true
+                }
+            }
+        );
 
-    return {
-        latitude: 52.52,
-        longitude: 13.41,
-        elevation: 0,
-        current_weather: {
-            temperature: 10,
-            windspeed: 10,
-            winddirection: 10,
-            weathercode: 10,
-            time: new Date()
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new ErrorModel(
+                'WEATHER.API_ERROR',
+                error.response?.status || 500
+            );
         }
-    };
+        throw new ErrorModel('WEATHER.UNEXPECTED_ERROR', 500);
+    }
 }

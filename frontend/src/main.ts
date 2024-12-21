@@ -5,6 +5,7 @@ import store from './store'
 import VueGoogleMaps from '@fawmi/vue-google-maps';
 import WeatherService from './services/weather-service.service';
 import { setupAxiosInterceptors } from './shared/axios-interceptor';
+import './assets/css/main.css'
 
 setupAxiosInterceptors(() => {
     console.log('Unauthenticated');
@@ -18,7 +19,7 @@ app.provide('weatherService', weatherService);
 
 app.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyAmlmN3Spuolpvy8xtSeeYK2KgH0166I90',
+        key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
         libraries: 'places,geometry',
     },
 });
