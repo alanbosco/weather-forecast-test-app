@@ -17,17 +17,6 @@ jobs:
       contents: read
       packages: write
 
-    services:
-      backend:
-        image: node:18-alpine
-        ports:
-          - "3000:3000"
-        options: --health-cmd "wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1" --health-interval 10s --health-timeout 5s --health-retries 5
-        volumes:
-          - ./backend:/app
-        working-dir: /app
-        command: sh -c "yarn install && yarn serve"
-
     steps:
       - uses: actions/checkout@v3
 
@@ -35,6 +24,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: yarn install
+
+      - name: Start Backend Server
+        working-directory: ./backend
+        run: yarn serve &
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
