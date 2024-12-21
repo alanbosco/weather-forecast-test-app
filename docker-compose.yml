@@ -4,8 +4,8 @@ services:
   backend:
     build: ./backend
     image: ${REGISTRY}/${IMAGE_NAME}/backend:latest
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     environment:
       - NODE_ENV=production
 
@@ -16,7 +16,7 @@ services:
         - VUE_APP_BACKEND_API_URL=${VUE_APP_BACKEND_API_URL}
         - VUE_APP_GOOGLE_MAPS_API_KEY=${VUE_APP_GOOGLE_MAPS_API_KEY}
     image: ${REGISTRY}/${IMAGE_NAME}/frontend:latest
-    ports:
-      - "80:80"
+    expose:
+      - "80"
     depends_on:
       - backend
