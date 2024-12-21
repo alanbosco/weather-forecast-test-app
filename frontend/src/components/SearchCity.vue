@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <div class="p-6 bg-primary-100">
+    <div class="p-6 text-center bg-primary-100">
       <h3 class="text-md font-semibold text-gray-800 mb-4">Type a city name to search</h3>
       
       <div class="relative">
