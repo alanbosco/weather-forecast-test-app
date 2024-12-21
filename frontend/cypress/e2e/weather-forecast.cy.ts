@@ -1,6 +1,7 @@
 describe('template spec', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit('/', { timeout: 30000 })
+    cy.window().should('have.property', 'google')
   })
 
   it('Should display header page', () => {
@@ -39,9 +40,9 @@ describe('template spec', () => {
     cy.wait(1000)
     cy.get('.pac-container').should('be.visible')
     cy.get('.pac-item').first().click()
-
+    cy.wait(4000)
     cy.get('.vue-map-container').click(100, 100)
-    cy.wait(1000)
+    cy.wait(2000)
     cy.get('[data-test="search-city-selected-location"]').should('be.visible')
     cy.get('[data-test="search-city-selected-location"]').should('contain', 'XQM2+R6 Videbaek, Denmark')
   })
