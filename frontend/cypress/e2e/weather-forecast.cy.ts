@@ -85,7 +85,7 @@ describe('template spec', () => {
     cy.get('[data-test="temperature"]')
       .should('contain', '°C');
 
-    cy.get('[data-test="kph-toggle"]').click();
+    cy.get('[data-test="kmh-toggle"]').click();
     cy.get('[data-test="wind-speed"]')
       .should('contain', 'km/h');
 

@@ -54,7 +54,7 @@ export default class WeatherForecast extends Vue {
   error: string | null = null;
 
   temperatureUnit = this.Units.Temperature.Celsius;
-  windSpeedUnit = this.Units.WindSpeed.KPH;
+  windSpeedUnit = this.Units.WindSpeed.KMH;
 
   getWeatherInfo(code: number, isDay = true): WeatherDescription {
     const weatherCode = weatherDescriptions[code as unknown as keyof typeof weatherDescriptions];
@@ -131,7 +131,7 @@ export default class WeatherForecast extends Vue {
 
   toggleWindSpeedUnit() {
     if (this.windSpeedUnit === this.Units.WindSpeed.MPH) {
-      this.windSpeedUnit = this.Units.WindSpeed.KPH;
+      this.windSpeedUnit = this.Units.WindSpeed.KMH;
     } else {
       this.windSpeedUnit = this.Units.WindSpeed.MPH;
     }

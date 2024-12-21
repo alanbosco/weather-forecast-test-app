@@ -26,9 +26,9 @@
           }" class="px-4 py-2 rounded-md transition-all duration-200 text-xs font-medium">
             MPH
           </button>
-          <button @click="toggleWindSpeedUnit" data-test="kph-toggle" :class="{
-            'bg-white shadow-sm text-primary-500': windSpeedUnit === Units.WindSpeed.KPH,
-            'text-gray-600 hover:text-gray-800': windSpeedUnit !== Units.WindSpeed.KPH
+          <button @click="toggleWindSpeedUnit" data-test="kmh-toggle" :class="{
+            'bg-white shadow-sm text-primary-500': windSpeedUnit === Units.WindSpeed.KMH,
+            'text-gray-600 hover:text-gray-800': windSpeedUnit !== Units.WindSpeed.KMH
           }" class="px-2 md:px-4 py-2 rounded-md transition-all duration-200 text-xs font-medium">
             Km/h
           </button>

@@ -42,7 +42,7 @@ export enum TemperatureUnit {
 
 export enum WindSpeedUnit {
     MPH = 'mph',
-    KPH = 'kph',
+    KMH = 'kmh',
 }
 
 export interface ForecastParamsModel {
