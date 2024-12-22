@@ -1,16 +1,18 @@
 <template>
-  <header class="flex justify-between items-center">
-    <div class="text-2xl font-bold pl-2">
-      Weather Forecast App
-    </div>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-  </header>
-  <main>
-    <router-view/>
-  </main>
+  <div class="min-h-screen bg-gray-50">
+    <header class="flex justify-between items-center">
+      <div class="text-2xl font-bold pl-2">
+        Weather Forecast App
+      </div>
+      <nav>
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link>
+      </nav>
+    </header>
+    <main>
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <style>

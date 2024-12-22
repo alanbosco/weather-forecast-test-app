@@ -1,5 +1,23 @@
 <template>
-  <div class="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto my-4">
+  <div class="relative bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto my-4">
+    <div v-if="forecast || weeklyForecast" class="md:absolute md:-top-[44px] md:right-0">
+      <div class="flex flex-wrap items-center justify-center md:justify-end gap-2 mb-4 md:mb-0">
+        <div class="flex rounded-lg bg-gray-100 p-1">
+          <button @click="toggleForecastType" data-test="toggle-daily-forecast" :class="{
+            'bg-white shadow-sm text-primary-500': forecastType === ForecastTypes.daily,
+            'text-gray-600 hover:text-gray-800': forecastType !== ForecastTypes.daily
+          }" class="px-4 py-2 rounded-md transition-all duration-200 text-xs font-medium">
+            Daily
+          </button>
+          <button @click="toggleForecastType" data-test="toggle-weekly-forecast" :class="{
+            'bg-white shadow-sm text-primary-500': forecastType === ForecastTypes.weekly,
+            'text-gray-600 hover:text-gray-800': forecastType !== ForecastTypes.weekly
+          }" class="px-4 py-2 rounded-md transition-all duration-200 text-xs font-medium">
+            Weekly
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
       <h3 class="text-xl font-semibold text-gray-800">Weather forecast for selected location</h3>
 
@@ -34,7 +52,7 @@
           </button>
         </div>
 
-        <button v-if="forecast" @click="refreshForecase" data-test="refresh-forecast"
+        <button v-if="forecast && forecastType === ForecastTypes.daily" @click="refreshForecase" data-test="refresh-forecast"
           class="inline-flex items-center px-4 py-2 rounded-md bg-primary-500 text-white text-sm font-medium hover:bg-primary-400 transition-colors duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:mr-2" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
@@ -68,7 +86,7 @@
       </p>
     </div>
 
-    <div v-else-if="forecast" data-test="weather-forecast">
+    <div v-else-if="forecast && forecastType === ForecastTypes.daily" data-test="weather-forecast">
       <div class="grid grid-cols-2 md:grid-cols-12 gap-4 text-center">
         <div class="bg-blue-50 p-4 rounded-lg md:col-span-2" data-test="temperature">
           <div class="text-sm text-blue-600 font-medium tracking-tight">Temperature</div>
@@ -97,9 +115,49 @@
         </div>
       </div>
 
-
       <div class="text-sm text-gray-500 mt-4">
         Last Updated: {{ new Date(forecast.current_weather.time).toLocaleString() }}
+      </div>
+    </div>
+
+    <div v-else-if="weeklyForecast && forecastType === ForecastTypes.weekly" data-test="weekly-weather-forecast" class="mt-4">
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
+        <div v-for="(_, index) in weeklyForecast.daily.time" :key="weeklyForecast.daily.time[index]"
+          class="flex flex-col bg-gray-50 rounded-lg shadow p-4 text-center">
+          <div class="text-sm font-medium text-gray-600 mb-2">
+            {{ formatDate(weeklyForecast.daily.time[index]) }}
+          </div>
+          
+          <div class="flex items-center justify-center mb-3 mt-auto">
+            <img 
+              :src="getWeatherInfo(weeklyForecast.daily.weather_code[index]).image"
+              :alt="getWeatherInfo(weeklyForecast.daily.weather_code[index]).description"
+              class="w-10 h-10"
+            />
+          </div>
+
+          <div class="flex flex-row md:flex-col justify-center gap-6 md:gap-0">
+            <div>
+              <div class="text-xs text-gray-500">Temperature</div>
+              <div class="flex justify-center gap-2 text-sm">
+                <span class="text-red-500">{{ weeklyForecast.daily.temperature_2m_max[index] }}</span>
+                <span class="text-blue-500">{{ weeklyForecast.daily.temperature_2m_min[index] }}</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="text-xs text-gray-500 md:mt-2">Wind</div>
+              <div class="flex flex-row md:flex-col gap-2 md:gap-0 items-center">
+                <div class="text-sm">
+                  {{ weeklyForecast.daily.wind_speed_10m_max[index] }}
+                </div>
+                <div class="text-xs text-gray-400">
+                  {{ weeklyForecast.daily.wind_direction_10m_dominant[index] }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

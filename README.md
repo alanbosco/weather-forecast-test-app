@@ -6,12 +6,17 @@ A modern weather forecast application built with Vue.js and Express.js, featurin
   <img src="screenshot.jpg" width="80%" alt="Desktop View" />
 </div>
 
+> View [Desktop Weekly Forecast Screenshot](screenshot-weekly.jpg)
+
 > View [Mobile Screenshot](screenshot-mobile.jpg)
+
+> View [Mobile Weekly Forecast Screenshot](screenshot-mobile-weekly.jpg)
 
 ## Features
 
 - 🌍 Interactive Google Maps integration for location selection
 - 🔍 Location search with Google Places Autocomplete
+- 📅 Toggle between daily and weekly forecasts
 - 🌤️ Real-time weather data from Open-Meteo API
 - 🔄 Unit conversion support:
   - Temperature (Celsius/Fahrenheit)
